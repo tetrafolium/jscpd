@@ -4,7 +4,7 @@ inspecode:
     auto-fix: true
     thresholds: { num-issues: 999 }
 
-  fossoligy:
+  fossology:
     thresholds: { num-issues: 999 }
 
   grep:
