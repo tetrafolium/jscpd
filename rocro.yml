@@ -1,0 +1,43 @@
+inspecode:
+
+  clang-format:
+    auto-fix: true
+    thresholds: { num-issues: 999 }
+
+  fossoligy:
+    thresholds: { num-issues: 999 }
+
+  grep:
+    thresholds: { num-issues: 999 }
+
+  htmlhint:
+    thresholds: { num-issues: 999 }
+
+  jscpd:
+    thresholds: { num-issues: 999 }
+
+  jshint:
+    thresholds: { num-issues: 999 }
+
+  misspell:
+    auto-fix: true
+    thresholds: { num-issues: 999 }
+
+  prettier:
+    auto-fix: true
+    thresholds: { num-issues: 999 }
+
+  stylelint:
+    auto-fix: true
+    thresholds: { num-issues: 999 }
+
+  tidy:
+    auto-fix: true
+    thresholds: { num-issues: 999 }
+
+  tslint:
+    auto-fix: true
+    thresholds: { num-issues: 999 }
+
+  unused:
+    thresholds: { num-issues: 999 }
