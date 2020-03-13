@@ -1,10 +1,13 @@
 inspecode:
 
-  clang-format:
-    auto-fix: true
-    thresholds: { num-issues: 68 }
-      # SaaS       : 68 issues
-      # Enterprise : Aborted / ClangFormat was aborted unexpectedly. (codelift#1747)
+  ##----------------------------------------------------------------------------
+  ## (codelift#1747) abort on Enterprise --> disabled temporary
+  ##----------------------------------------------------------------------------
+  #clang-format:
+  #  auto-fix: true
+  #  thresholds: { num-issues: 68 }
+  #    # SaaS       : 68 issues
+  #    # Enterprise : Aborted / ClangFormat was aborted unexpectedly. (codelift#1747)
 
   fossology:
     thresholds: { num-issues: 16 }
