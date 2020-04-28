@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import Media from './Media';
 import { bsClass, getClassSet, prefix, splitBsProps }
@@ -14,7 +14,7 @@ const propTypes = {
 };
 
 class MediaRight extends React.Component {
-    render() {
+    public render() {
         const { align, className, ...props } = this.props;
         const [bsProps, elementProps] = splitBsProps(props);
 
