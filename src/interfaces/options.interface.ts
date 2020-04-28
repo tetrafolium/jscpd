@@ -1,5 +1,5 @@
-import { IStoreManagerOptions } from './store/store-manager-options.interface';
-import { IToken } from './token/token.interface';
+import {IStoreManagerOptions} from './store/store-manager-options.interface';
+import {IToken} from './token/token.interface';
 
 export interface IOptions {
   executionId?: string;
@@ -9,10 +9,10 @@ export interface IOptions {
   minTokens?: number;
   threshold?: number;
   xslHref?: string; // deprecated
-  formatsExts?: { [key: string]: string[] };
+  formatsExts?: {[key: string]: string[]};
   output?: string;
   path?: string[];
-  mode?: string | ((token: IToken) => boolean);
+  mode?: string|((token: IToken) => boolean);
   config?: string;
   ignore?: string[];
   format?: string[];
@@ -28,8 +28,6 @@ export interface IOptions {
   ignoreCase?: boolean;
   gitignore?: boolean;
   storeOptions?: IStoreManagerOptions;
-  reportersOptions?: {
-    [name: string]: any;
-  };
+  reportersOptions?: {[name: string]: any;};
   tokensToSkip?: string[];
 }

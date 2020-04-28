@@ -1,11 +1,11 @@
-import { IMode } from '../interfaces/mode.type';
-import { useMode } from '../utils/use';
-import { custom } from './custom';
-import { mild } from './mild';
-import { strict } from './strict';
-import { weak } from './weak';
+import {IMode} from '../interfaces/mode.type';
+import {useMode} from '../utils/use';
+import {custom} from './custom';
+import {mild} from './mild';
+import {strict} from './strict';
+import {weak} from './weak';
 
-const MODES: { [name: string]: IMode } = {
+const MODES: {[name: string]: IMode} = {
   mild,
   strict,
   weak,
@@ -23,6 +23,6 @@ export function getModeByName(name: string): IMode {
   return useMode(name);
 }
 
-export function getModeHandler(mode: string | IMode): IMode {
+export function getModeHandler(mode: string|IMode): IMode {
   return typeof mode === 'string' ? getModeByName(mode) : mode;
 }

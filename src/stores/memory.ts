@@ -1,8 +1,8 @@
-import { IStoreValue } from '../interfaces/store/store-value.interface';
-import { IStore } from '../interfaces/store/store.interface';
+import {IStoreValue} from '../interfaces/store/store-value.interface';
+import {IStore} from '../interfaces/store/store.interface';
 
 export class MemoryStore<TValue extends IStoreValue> implements IStore<TValue> {
-  protected values: { [key: string]: TValue } = {};
+  protected values: {[key: string]: TValue} = {};
 
   // constructor(private options: IStoreOptions) {
   //   if (this.options.name === 'files') {
@@ -22,7 +22,7 @@ export class MemoryStore<TValue extends IStoreValue> implements IStore<TValue> {
     return Promise.resolve(value);
   }
 
-  public init(values: { [p: string]: TValue }): Promise<any> {
+  public init(values: {[p: string]: TValue}): Promise<any> {
     this.values = values;
     return Promise.resolve(values);
   }
@@ -35,9 +35,7 @@ export class MemoryStore<TValue extends IStoreValue> implements IStore<TValue> {
     return Promise.resolve(keys.map(key => this.values.hasOwnProperty(key)));
   }
 
-  public connect(): Promise<any> {
-    return Promise.resolve();
-  }
+  public connect(): Promise<any> { return Promise.resolve(); }
 
   public delete(key: string): Promise<any> {
     delete this.values[key];
@@ -49,7 +47,5 @@ export class MemoryStore<TValue extends IStoreValue> implements IStore<TValue> {
     return Promise.resolve(value);
   }
 
-  public close(): Promise<any> {
-    return Promise.resolve();
-  }
+  public close(): Promise<any> { return Promise.resolve(); }
 }

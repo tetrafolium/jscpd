@@ -1,6 +1,6 @@
-import test, { ExecutionContext } from 'ava';
-import { IStore } from '../../interfaces/store/store.interface';
-import { MemoryStore } from '../memory';
+import test, {ExecutionContext} from 'ava';
+import {IStore} from '../../interfaces/store/store.interface';
+import {MemoryStore} from '../memory';
 
 test('should delete record by key', async (t: ExecutionContext) => {
   const store: IStore<any> = new MemoryStore();
@@ -19,7 +19,8 @@ test('should update record by key', async (t: ExecutionContext) => {
 test('should return total by keys', async (t: ExecutionContext) => {
   const store: IStore<any> = new MemoryStore();
   await store.set('test', 'test1');
-  t.deepEqual(await store.getAllByKeys(['test', 'zzz']), ['test1', undefined]);
+  t.deepEqual(await store.getAllByKeys([ 'test', 'zzz' ]),
+              [ 'test1', undefined ]);
 });
 
 test('should check key in store', async (t: ExecutionContext) => {
@@ -31,5 +32,5 @@ test('should check key in store', async (t: ExecutionContext) => {
 test('should check array of keys in store', async (t: ExecutionContext) => {
   const store: IStore<any> = new MemoryStore();
   await store.set('test', 'test1');
-  t.deepEqual(await store.hasKeys(['test', 'zzz']), [true, false]);
+  t.deepEqual(await store.hasKeys([ 'test', 'zzz' ]), [ true, false ]);
 });

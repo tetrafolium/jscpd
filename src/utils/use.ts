@@ -1,4 +1,4 @@
-import { IMode } from '..';
+import {IMode} from '..';
 
 const detectInstalled = require('detect-installed');
 
@@ -29,10 +29,9 @@ export function useMode(name: string): IMode {
 
 export function use<T>(name: string, type: ModuleType): T {
   const packageName = `jscpd-${name}-${type}`;
-  if (!detectInstalled.sync(packageName, { local: true })) {
-    throw new Error(
-      `Module (type: ${type}) "${packageName}" does not found, please check that you have installed the package`
-    );
+  if (!detectInstalled.sync(packageName, {local : true})) {
+    throw new Error(`Module (type: ${type}) "${
+        packageName}" does not found, please check that you have installed the package`);
   }
   return require(packageName).default;
 }

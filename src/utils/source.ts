@@ -1,5 +1,5 @@
-import { existsSync, readFileSync } from 'fs';
-import { ISourceOptions } from '../interfaces/source-options.interface';
+import {existsSync, readFileSync} from 'fs';
+import {ISourceOptions} from '../interfaces/source-options.interface';
 
 export function sourceToString(options: ISourceOptions): string {
   if (options.hasOwnProperty('source')) {

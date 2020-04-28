@@ -1,4 +1,4 @@
-import { IStoreValue } from './store/store-value.interface';
+import {IStoreValue} from './store/store-value.interface';
 
 export interface ISourceOptions extends IStoreValue {
   id: string;

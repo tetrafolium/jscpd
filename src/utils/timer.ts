@@ -1,6 +1,6 @@
 const t = require('exectimer');
 
-const TICKS: { [name: string]: any } = {};
+const TICKS: {[name: string]: any} = {};
 
 export function timerStart(name: string) {
   if (!TICKS.hasOwnProperty(name)) {

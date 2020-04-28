@@ -1,6 +1,6 @@
-import { bgMagenta, bold, green, red } from 'colors/safe';
-import { IReporter } from '..';
-import { END_EVENT, JscpdEventEmitter } from '../events';
+import {bgMagenta, bold, green, red} from 'colors/safe';
+import {IReporter} from '..';
+import {END_EVENT, JscpdEventEmitter} from '../events';
 
 const t = require('exectimer');
 
@@ -9,9 +9,7 @@ export class ExecTimerReporter implements IReporter {
     eventEmitter.on(END_EVENT, this.generateReport.bind(this));
   }
 
-  public report(): void {
-    console.log(`Exec timer executed.`);
-  }
+  public report(): void { console.log(`Exec timer executed.`); }
 
   private generateReport() {
     let total: number = 0;
@@ -19,13 +17,10 @@ export class ExecTimerReporter implements IReporter {
       const results: any = t.timers[name];
       total += results.duration();
       console.log(bgMagenta(name));
-      console.log(
-        red(
-          `Exec count: ${results.count()}, total time: ${bold(parse(results.duration()))}, tick time: ${bold(
-            parse(results.min())
-          )} (${parse(results.min())} - ${parse(results.median())} - ${parse(results.max())})`
-        )
-      );
+      console.log(red(`Exec count: ${results.count()}, total time: ${
+          bold(parse(results.duration()))}, tick time: ${
+          bold(parse(results.min()))} (${parse(results.min())} - ${
+          parse(results.median())} - ${parse(results.max())})`));
     });
     console.log(green(`Total time: ${parse(total)}`));
   }

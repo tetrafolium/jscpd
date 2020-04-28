@@ -1,12 +1,13 @@
-import { ensureDirSync } from 'fs-extra';
+import {ensureDirSync} from 'fs-extra';
 import rimraf from 'rimraf';
-import { IStoreOptions } from '../interfaces/store/store-options.interface';
-import { IStoreValue } from '../interfaces/store/store-value.interface';
-import { IStore } from '../interfaces/store/store.interface';
+import {IStoreOptions} from '../interfaces/store/store-options.interface';
+import {IStoreValue} from '../interfaces/store/store-value.interface';
+import {IStore} from '../interfaces/store/store.interface';
 
 const level = require('level');
 
-export class LevelDbStore<TValue extends IStoreValue> implements IStore<TValue> {
+export class LevelDbStore<TValue extends IStoreValue> implements
+    IStore<TValue> {
   private db: any;
 
   constructor(private options: IStoreOptions) {
@@ -19,10 +20,9 @@ export class LevelDbStore<TValue extends IStoreValue> implements IStore<TValue> 
   }
 
   public get(key: string): Promise<TValue> {
-    return this.db
-      .get(key)
-      .then((value: string) => JSON.parse(value))
-      .catch(() => undefined);
+    return this.db.get(key)
+        .then((value: string) => JSON.parse(value))
+        .catch(() => undefined);
   }
 
   public getAllByKeys(keys: string[]): Promise<TValue[]> {
@@ -33,15 +33,10 @@ export class LevelDbStore<TValue extends IStoreValue> implements IStore<TValue> 
     return this.db.put(key, JSON.stringify(value));
   }
 
-  public init(): Promise<any> {
-    return Promise.resolve({});
-  }
+  public init(): Promise<any> { return Promise.resolve({}); }
 
   public has(key: string): Promise<boolean> {
-    return this.db
-      .get(key)
-      .then(() => true)
-      .catch(() => false);
+    return this.db.get(key).then(() => true).catch(() => false);
   }
 
   public hasKeys(keys: string[]): Promise<boolean[]> {
@@ -53,9 +48,7 @@ export class LevelDbStore<TValue extends IStoreValue> implements IStore<TValue> 
     return Promise.resolve();
   }
 
-  public delete(key: string): Promise<any> {
-    return this.db.del(key);
-  }
+  public delete(key: string): Promise<any> { return this.db.del(key); }
 
   public update(key: string, value: TValue): Promise<any> {
     return this.delete(key).then(() => this.set(key, value));
@@ -65,7 +58,7 @@ export class LevelDbStore<TValue extends IStoreValue> implements IStore<TValue> 
     return new Promise(resolve => {
       this.db.close(() => {
         if (!this.options.persist) {
-          rimraf(`.jscpd/${this.options.name}`, { maxBusyTries: 10 }, err => {
+          rimraf(`.jscpd/${this.options.name}`, {maxBusyTries : 10}, err => {
             if (err) {
               console.log(err);
             }

@@ -9,15 +9,13 @@ export interface IStatisticRow {
 }
 
 export interface IStatisticFormat {
-  sources: { [source: string]: IStatisticRow };
+  sources: {[source: string]: IStatisticRow};
   total: IStatisticRow;
 }
 
 export interface IStatistic {
   total: IStatisticRow;
   detectionDate: string;
-  formats: {
-    [format: string]: IStatisticFormat;
-  };
+  formats: {[format: string]: IStatisticFormat;};
   threshold?: number;
 }

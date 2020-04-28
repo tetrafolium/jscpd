@@ -1,7 +1,5 @@
 document.querySelectorAll('#nav li').forEach(function(navEl) {
-  navEl.onclick = function() {
-    toggleTab(this.id, this.dataset.target);
-  };
+  navEl.onclick = function() { toggleTab(this.id, this.dataset.target); };
 });
 
 function toggleTab(selectedNav, targetId) {
@@ -28,11 +26,8 @@ function toggleTab(selectedNav, targetId) {
   });
 }
 
-
 document.querySelectorAll('#nav li').forEach(function(navEl) {
-  navEl.onclick = function() {
-    toggleTab(this.id, this.dataset.target);
-  };
+  navEl.onclick = function() { toggleTab(this.id, this.dataset.target); };
 });
 
 function toggleTab(selectedNav, targetId) {

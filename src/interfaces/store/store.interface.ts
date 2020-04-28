@@ -1,9 +1,9 @@
-import { IStoreValue } from './store-value.interface';
+import {IStoreValue} from './store-value.interface';
 
 export interface IStore<TValue extends IStoreValue> {
   connect(): Promise<any>;
 
-  init(values: { [key: string]: TValue }): Promise<any>;
+  init(values: {[key: string]: TValue}): Promise<any>;
 
   get(key: string): Promise<TValue>;
 

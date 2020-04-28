@@ -1,5 +1,5 @@
-import { IReporter } from '..';
-import { END_EVENT, JscpdEventEmitter } from '../events';
+import {IReporter} from '..';
+import {END_EVENT, JscpdEventEmitter} from '../events';
 
 export class TimeReporter implements IReporter {
   public attach(eventEmitter: JscpdEventEmitter): void {

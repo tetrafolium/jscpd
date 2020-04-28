@@ -1,13 +1,17 @@
 import bytes = require('bytes');
-import { bgBlue, green, grey, red } from 'colors/safe';
+import {bgBlue, green, grey, red} from 'colors/safe';
 import EventEmitter = require('eventemitter3');
-import { IOptions, IReporter } from '..';
-import { CLONE_FOUND_EVENT, MATCH_SOURCE_EVENT, SOURCE_SKIPPED_EVENT } from '../events';
-import { IClone } from '../interfaces/clone.interface';
-import { ISourceOptions } from '../interfaces/source-options.interface';
+import {IOptions, IReporter} from '..';
+import {
+  CLONE_FOUND_EVENT,
+  MATCH_SOURCE_EVENT,
+  SOURCE_SKIPPED_EVENT
+} from '../events';
+import {IClone} from '../interfaces/clone.interface';
+import {ISourceOptions} from '../interfaces/source-options.interface';
 
 export class VerboseReporter implements IReporter {
-  private startTime: [number, number];
+  private startTime: [ number, number ];
   private sourceCount: number = 0;
 
   constructor(protected options: IOptions) {
@@ -31,10 +35,8 @@ export class VerboseReporter implements IReporter {
 
   private skipSource(source: any) {
     console.log(
-      grey(
-        `Source skipped ${source.path} (Size: ${bytes(source.size)}${source.lines ? ', Lines: ' + source.lines : ''})`
-      )
-    );
+        grey(`Source skipped ${source.path} (Size: ${bytes(source.size)}${
+            source.lines ? ', Lines: ' + source.lines : ''})`));
   }
 
   private cloneFound(clone: IClone) {
@@ -44,12 +46,13 @@ export class VerboseReporter implements IReporter {
   }
 
   private generateStatistic(format: string) {
-    console.log(
-      bgBlue([parseHrtimeToSeconds(process.hrtime(this.startTime)), 'sec', format, this.sourceCount].join(' '))
-    );
+    console.log(bgBlue([
+      parseHrtimeToSeconds(process.hrtime(this.startTime)), 'sec', format,
+      this.sourceCount
+    ].join(' ')));
   }
 }
 
-function parseHrtimeToSeconds(hrtime: [number, number]): string {
+function parseHrtimeToSeconds(hrtime: [ number, number ]): string {
   return (hrtime[0] + hrtime[1] / 1e9).toFixed(3);
 }

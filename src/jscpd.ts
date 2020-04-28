@@ -1,37 +1,40 @@
 import bytes = require('bytes');
-import { bold } from 'colors/safe';
+import {bold} from 'colors/safe';
 import EventEmitter = require('eventemitter3');
-import { sync } from 'fast-glob';
-import { EntryItem } from 'fast-glob/out/types/entries';
-import { existsSync, lstatSync, Stats } from 'fs';
-import { getSourceFragmentLength } from './clone';
-import { Detector } from './detector';
-import { END_EVENT, JscpdEventEmitter, MATCH_SOURCE_EVENT, SOURCE_SKIPPED_EVENT } from './events';
-import { IClone } from './interfaces/clone.interface';
-import { IListener } from './interfaces/listener.interface';
-import { IOptions } from './interfaces/options.interface';
-import { IPostHook } from './interfaces/post-hook.interface';
-import { IPreHook } from './interfaces/pre-hook.interface';
-import { IReporter } from './interfaces/reporter.interface';
-import { ISourceOptions } from './interfaces/source-options.interface';
-import { IStatistic } from './interfaces/statistic.interface';
-import { IToken } from './interfaces/token/token.interface';
-import { getRegisteredListeners, registerListenerByName } from './listeners';
-import { getModeHandler } from './modes';
-import { getRegisteredReporters, registerReportersByName } from './reporters';
-import { STATISTIC_DB } from './stores/models';
-import { StoreManager, StoresManager } from './stores/stores-manager';
-import { createTokensMaps, initLanguages, tokenize } from './tokenizer';
-import { getFormatByFile } from './tokenizer/formats';
-import { TokensMap } from './tokenizer/token-map';
-import { getDefaultOptions, getOption } from './utils/options';
-import { sourceToString } from './utils/source';
+import {sync} from 'fast-glob';
+import {EntryItem} from 'fast-glob/out/types/entries';
+import {existsSync, lstatSync, Stats} from 'fs';
+import {getSourceFragmentLength} from './clone';
+import {Detector} from './detector';
+import {
+  END_EVENT,
+  JscpdEventEmitter,
+  MATCH_SOURCE_EVENT,
+  SOURCE_SKIPPED_EVENT
+} from './events';
+import {IClone} from './interfaces/clone.interface';
+import {IListener} from './interfaces/listener.interface';
+import {IOptions} from './interfaces/options.interface';
+import {IPostHook} from './interfaces/post-hook.interface';
+import {IPreHook} from './interfaces/pre-hook.interface';
+import {IReporter} from './interfaces/reporter.interface';
+import {ISourceOptions} from './interfaces/source-options.interface';
+import {IStatistic} from './interfaces/statistic.interface';
+import {IToken} from './interfaces/token/token.interface';
+import {getRegisteredListeners, registerListenerByName} from './listeners';
+import {getModeHandler} from './modes';
+import {getRegisteredReporters, registerReportersByName} from './reporters';
+import {STATISTIC_DB} from './stores/models';
+import {StoreManager, StoresManager} from './stores/stores-manager';
+import {createTokensMaps, initLanguages, tokenize} from './tokenizer';
+import {getFormatByFile} from './tokenizer/formats';
+import {TokensMap} from './tokenizer/token-map';
+import {getDefaultOptions, getOption} from './utils/options';
+import {sourceToString} from './utils/source';
 
 const gitignoreToGlob = require('gitignore-to-glob');
 
-export function getStoreManager(): StoreManager<any> {
-  return StoresManager;
-}
+export function getStoreManager(): StoreManager<any> { return StoresManager; }
 
 function isFile(path: string): boolean {
   try {
@@ -44,29 +47,17 @@ function isFile(path: string): boolean {
 }
 
 export class JSCPD {
-  get options(): IOptions {
-    return this._options;
-  }
+  get options(): IOptions { return this._options; }
 
-  set options(value: IOptions) {
-    this._options = value;
-  }
+  set options(value: IOptions) { this._options = value; }
 
-  get files(): EntryItem[] {
-    return this._files;
-  }
+  get files(): EntryItem[] { return this._files; }
 
-  set files(value: EntryItem[]) {
-    this._files = value;
-  }
+  set files(value: EntryItem[]) { this._files = value; }
 
-  get clones(): IClone[] {
-    return this._clones;
-  }
+  get clones(): IClone[] { return this._clones; }
 
-  set clones(value: IClone[]) {
-    this._clones = value;
-  }
+  set clones(value: IClone[]) { this._clones = value; }
 
   private readonly eventEmitter: JscpdEventEmitter;
   private detector: Detector;
@@ -78,24 +69,21 @@ export class JSCPD {
 
   constructor(options: IOptions = {} as IOptions, eventEmitter?: EventEmitter) {
     this.eventEmitter = eventEmitter || new JscpdEventEmitter();
-    this._options = { ...getDefaultOptions(), ...options };
+    this._options = {...getDefaultOptions(), ...options};
     this.initializeListeners();
     this.initializeReporters();
     this.detector = new Detector(this._options, this.eventEmitter);
     StoresManager.initialize(this._options.storeOptions);
   }
 
-  public attachPreHook(hook: IPreHook) {
-    this._preHooks.push(hook);
-  }
+  public attachPreHook(hook: IPreHook) { this._preHooks.push(hook); }
 
-  public attachPostHook(hook: IPostHook) {
-    this._postHooks.push(hook);
-  }
+  public attachPostHook(hook: IPostHook) { this._postHooks.push(hook); }
 
-  public async detect(code: string, options: ISourceOptions): Promise<IClone[]> {
+  public async detect(code: string,
+                      options: ISourceOptions): Promise<IClone[]> {
     await Promise.all(this._preHooks.map((hook: IPreHook) => hook.use(this)));
-    this._clones = await this._detect(code, { ...options, source: code });
+    this._clones = await this._detect(code, {...options, source : code});
     await this._detectionFinished(this._clones, true);
     return this._clones;
   }
@@ -104,35 +92,38 @@ export class JSCPD {
     const ignore: string[] = this._options.ignore || [];
 
     if (this._options.gitignore && existsSync(pathToFiles + '/.gitignore')) {
-      let gitignorePatterns: string[] = gitignoreToGlob(pathToFiles + '/.gitignore') || [];
+      let gitignorePatterns: string[] =
+          gitignoreToGlob(pathToFiles + '/.gitignore') || [];
       gitignorePatterns = gitignorePatterns.map(
-        pattern => (pattern.substr(pattern.length - 1) === '/' ? `${pattern}**/*` : pattern)
-      );
+          pattern =>
+              (pattern.substr(pattern.length - 1) === '/' ? `${pattern}**/*`
+                                                          : pattern));
       ignore.push(...gitignorePatterns);
       ignore.map(pattern => pattern.replace('!', ''));
     }
 
-    this._files = sync(
-      pathToFiles.map(path => {
-        if (isFile(path)) {
-          return path;
-        }
-        return path.substr(path.length - 1) === '/' ? `${path}**/*` : `${path}/**/*`;
-      }),
-      {
-        ignore,
-        onlyFiles: true,
-        dot: true,
-        stats: true,
-        absolute: true,
-        followSymlinkedDirectories: !this.options.noSymlinks
+    this._files = sync(pathToFiles.map(path => {
+      if (isFile(path)) {
+        return path;
       }
-    );
+      return path.substr(path.length - 1) === '/' ? `${path}**/*`
+                                                  : `${path}/**/*`;
+    }),
+                       {
+                         ignore,
+                         onlyFiles : true,
+                         dot : true,
+                         stats : true,
+                         absolute : true,
+                         followSymlinkedDirectories : !this.options.noSymlinks
+                       });
 
     this._files = this._files.filter((stats: any) => {
-      const { path } = stats;
-      const format: string = getFormatByFile(path, this._options.formatsExts) as string;
-      return format && this._options.format && this._options.format.includes(format);
+      const {path} = stats;
+      const format: string =
+          getFormatByFile(path, this._options.formatsExts) as string;
+      return format && this._options.format &&
+             this._options.format.includes(format);
     });
 
     if (this._options.debug) {
@@ -141,43 +132,49 @@ export class JSCPD {
 
     await Promise.all(this._preHooks.map((hook: IPreHook) => hook.use(this)));
 
-    const sources: Array<{ source: string; sourceOptions: ISourceOptions }> = this._files
-      .filter((stats: any) => {
-        const { path } = stats;
-        if (this._options.debug) {
-          console.log(path);
-          return false;
-        }
-        if (stats.size > bytes(getOption('maxSize', this._options))) {
-          this.eventEmitter.emit(SOURCE_SKIPPED_EVENT, stats);
-        }
-        return !(stats.size > bytes(getOption('maxSize', this._options)));
-      })
-      .filter((stats: any) => {
-        const { path } = stats;
-        const source: string = sourceToString({ id: path } as ISourceOptions);
-        const lines = source.split('\n').length;
-        if (lines < getOption('minLines', this._options) || lines > getOption('maxLines', this._options)) {
-          this.eventEmitter.emit(SOURCE_SKIPPED_EVENT, { ...stats, lines });
-          return false;
-        }
-        return true;
-      })
-      .map((stats: any) => {
-        const { path } = stats;
-        const format: string = getFormatByFile(path, this._options.formatsExts) as string;
-        const source: string = sourceToString({ id: path } as ISourceOptions);
-        const sourceOptions: ISourceOptions = {
-          id: path,
-          format,
-          detectionDate: new Date().getTime(),
-          lastUpdateDate: stats.mtimeMs
-        };
-        return { source, sourceOptions };
-      });
+    const sources: Array<{source : string; sourceOptions : ISourceOptions}> =
+        this._files
+            .filter((stats: any) => {
+              const {path} = stats;
+              if (this._options.debug) {
+                console.log(path);
+                return false;
+              }
+              if (stats.size > bytes(getOption('maxSize', this._options))) {
+                this.eventEmitter.emit(SOURCE_SKIPPED_EVENT, stats);
+              }
+              return !(stats.size > bytes(getOption('maxSize', this._options)));
+            })
+            .filter((stats: any) => {
+              const {path} = stats;
+              const source: string =
+                  sourceToString({id : path} as ISourceOptions);
+              const lines = source.split('\n').length;
+              if (lines < getOption('minLines', this._options) ||
+                  lines > getOption('maxLines', this._options)) {
+                this.eventEmitter.emit(SOURCE_SKIPPED_EVENT, {...stats, lines});
+                return false;
+              }
+              return true;
+            })
+            .map((stats: any) => {
+              const {path} = stats;
+              const format: string =
+                  getFormatByFile(path, this._options.formatsExts) as string;
+              const source: string =
+                  sourceToString({id : path} as ISourceOptions);
+              const sourceOptions: ISourceOptions = {
+                id : path,
+                format,
+                detectionDate : new Date().getTime(),
+                lastUpdateDate : stats.mtimeMs
+              };
+              return {source, sourceOptions};
+            });
 
     for (const source of sources) {
-      this._clones.push(...(await this._detect(source.source, source.sourceOptions)));
+      this._clones.push(
+          ...(await this._detect(source.source, source.sourceOptions)));
     }
 
     await this._detectionFinished(this._clones);
@@ -188,64 +185,63 @@ export class JSCPD {
     this.eventEmitter.on(event, fn, context);
   }
 
-  private async _detect(source: string, options: ISourceOptions): Promise<IClone[]> {
-    initLanguages([options.format]);
+  private async _detect(source: string,
+                        options: ISourceOptions): Promise<IClone[]> {
+    initLanguages([ options.format ]);
     const mode = getModeHandler(getOption('mode', this._options));
     const tokens: IToken[] = tokenize(source, options.format)
-      .filter(token => mode(token, this._options))
-      .map(
-        (token: IToken): IToken => {
-          if (getOption('ignoreCase', this._options)) {
-            token.value = token.value.toLocaleLowerCase();
-          }
-          return token;
-        }
-      );
+                                 .filter(token => mode(token, this._options))
+                                 .map((token: IToken): IToken => {
+                                   if (getOption('ignoreCase', this._options)) {
+                                     token.value =
+                                         token.value.toLocaleLowerCase();
+                                   }
+                                   return token;
+                                 });
 
-    const tokenMaps: TokensMap[] = createTokensMaps(tokens, getOption('minTokens', this._options)).map(tokenMap => {
-      const subSource: ISourceOptions = {
-        ...options,
-        format: tokenMap.getFormat(),
-        range: [tokenMap.getStartPosition(), tokenMap.getEndPosition()],
-        lines: getSourceFragmentLength(options, tokenMap.getStartPosition(), tokenMap.getEndPosition())
-      };
-      tokenMap.setSourceId(options.id);
-      this.eventEmitter.emit(MATCH_SOURCE_EVENT, subSource);
-      return tokenMap;
-    });
+    const tokenMaps: TokensMap[] =
+        createTokensMaps(tokens, getOption('minTokens', this._options))
+            .map(tokenMap => {
+              const subSource: ISourceOptions = {
+                ...options,
+                format : tokenMap.getFormat(),
+                range :
+                    [ tokenMap.getStartPosition(), tokenMap.getEndPosition() ],
+                lines : getSourceFragmentLength(options,
+                                                tokenMap.getStartPosition(),
+                                                tokenMap.getEndPosition())
+              };
+              tokenMap.setSourceId(options.id);
+              this.eventEmitter.emit(MATCH_SOURCE_EVENT, subSource);
+              return tokenMap;
+            });
 
-    return await Promise.all(
-      tokenMaps.map(async (tokenMap: TokensMap) => {
-        return await this.detector.detectByMap(tokenMap);
-      })
-    ).then((clns: any[]) => {
-      return [].concat(...clns);
-    });
+    return await Promise
+        .all(tokenMaps.map(async (tokenMap: TokensMap) => {
+          return await this.detector.detectByMap(tokenMap);
+        }))
+        .then((clns: any[]) => { return [].concat(...clns); });
   }
 
   private initializeReporters() {
     registerReportersByName(this._options);
 
-    Object.values(getRegisteredReporters()).map((reporter: IReporter) => {
-      reporter.attach(this.eventEmitter);
-    });
+    Object.values(getRegisteredReporters())
+        .map((reporter: IReporter) => { reporter.attach(this.eventEmitter); });
   }
 
   private initializeListeners() {
     registerListenerByName(this._options);
 
-    Object.values(getRegisteredListeners()).map((listener: IListener) => {
-      listener.attach(this.eventEmitter);
-    });
+    Object.values(getRegisteredListeners())
+        .map((listener: IListener) => { listener.attach(this.eventEmitter); });
   }
 
   private async _detectionFinished(clones: IClone[], pesists: boolean = false) {
-    await Promise.all(
-      this._postHooks.map(async (hook: IPostHook) => {
-        clones = await hook.use(clones);
-        return clones;
-      })
-    );
+    await Promise.all(this._postHooks.map(async (hook: IPostHook) => {
+      clones = await hook.use(clones);
+      return clones;
+    }));
     await this.generateReports(clones);
     this.eventEmitter.emit(END_EVENT, clones);
     if (!pesists) {
@@ -254,11 +250,10 @@ export class JSCPD {
   }
 
   private async generateReports(clones: IClone[]) {
-    const statistic: IStatistic = await StoresManager.getStore(STATISTIC_DB).get(
-      getOption('executionId', this.options)
-    );
-    Object.values(getRegisteredReporters()).map((reporter: IReporter) => {
-      reporter.report(clones, statistic);
-    });
+    const statistic: IStatistic =
+        await StoresManager.getStore(STATISTIC_DB)
+            .get(getOption('executionId', this.options));
+    Object.values(getRegisteredReporters())
+        .map((reporter: IReporter) => { reporter.report(clones, statistic); });
   }
 }
