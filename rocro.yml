@@ -1,57 +1,8 @@
 inspecode:
 
-  clang-format:
-    auto-fix: true
-    thresholds: { num-issues: 68 }
-      # SaaS       : 68 issues
-      # Enterprise : Aborted / ClangFormat was aborted unexpectedly. (codelift#1747)
-
-  fossology:
-    thresholds: { num-issues: 16 }
-
-  grep:
-    thresholds: { num-issues: 0 }
-
-  htmlhint:
-    thresholds: { num-issues: 2 }
-
-  jscpd:
-    thresholds: { num-issues: 14 }
-      # SaaS/staging : 14 issues
-      # SaaS/prod    : Failed / xargs: jscpd: terminated by signal 11 (SIGSEGV)
-
-  jshint:
-    thresholds: { num-issues: 20 }
-
-  misspell:
-    auto-fix: true
-    thresholds: { num-issues: 1 }
-
-  npm-audit:
-    auto-fix: true
-    thresholds: { num-issues: 999 }
-
-  npm-test:
-    thresholds: { num-issues: 999 }
-
   ##----------------------------------------------------------------------------
   ## [error] src/tokenizer/__tests__/__snapshots__/prism.spec.ts.md: RangeError: Maximum call stack size exceeded
   ##----------------------------------------------------------------------------
   prettier:
     auto-fix: true
     thresholds: { num-issues: 999 }
-
-  stylelint:
-    auto-fix: true
-    thresholds: { num-issues: 0 }
-
-  tidy:
-    auto-fix: true
-    thresholds: { num-issues: 15 }
-
-  tslint:
-    auto-fix: true
-    thresholds: { num-issues: 219 }
-
-  unused:
-    thresholds: { num-issues: 0 }
