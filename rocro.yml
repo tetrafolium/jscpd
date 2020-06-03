@@ -6,3 +6,4 @@ inspecode:
   prettier:
     auto-fix: true
     thresholds: { num-issues: 999 }
+    ignore: src/tokenizer/__tests__/__snapshots__/prism.spec.ts.md  # Maximum call stack size exceeded
