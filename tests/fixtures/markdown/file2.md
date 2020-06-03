@@ -8,17 +8,17 @@ test file3
 
 `jscpd` is a tool for detect copy/paste "design pattern" in programming source code.
 
-| _Supported languages_ |              |               |
-|-----------------------|--------------|---------------|
-| JavaScript            | Java         | YAML          |
-| CoffeeScript          | C++          | Haxe          |
-| PHP                   | C#           | TypeScript    |
-| Go                    | Python       | Mixed HTML    |
-| Ruby                  | C            | SCSS          |
-| Less                  | CSS          | erlang        |
-| Swift                 | xml/xslt     | Objective-C   |
-| Puppet                | Twig         | Vue.js        |
-| Scala                 | Lua          |               |
+| _Supported languages_ |          |             |
+| --------------------- | -------- | ----------- |
+| JavaScript            | Java     | YAML        |
+| CoffeeScript          | C++      | Haxe        |
+| PHP                   | C#       | TypeScript  |
+| Go                    | Python   | Mixed HTML  |
+| Ruby                  | C        | SCSS        |
+| Less                  | CSS      | erlang      |
+| Swift                 | xml/xslt | Objective-C |
+| Puppet                | Twig     | Vue.js      |
+| Scala                 | Lua      |             |
 
 If you need support language not from list feel free to create [request](https://github.com/kucherenko/jscpd/issues/new).
 
@@ -46,14 +46,15 @@ If you need support language not from list feel free to create [request](https:/
     jscpd --files "**/*.js" --exclude "**/*.min.js" --output report.xml
 
     jscpd --files "**/*.js" --exclude "**/*.min.js" --reporter json --output report.json
-    
+
     jscpd --languages-exts javascript:es5,es6,es7,js;php:php5
-    
+
     jscpd --config test/.cpd.yaml
 
 or
 
 If you have file `.cpd.yaml` in your directory
+
 ```yaml
 #.cpd.yaml
 languages:
@@ -71,25 +72,26 @@ languages:
   - swift
   - twig
   - java
-  - clike    # c++, c, objective-c source
-  - csharp      # c# source
-  - htmlmixed   # html mixed source like knockout.js templates
+  - clike # c++, c, objective-c source
+  - csharp # c# source
+  - htmlmixed # html mixed source like knockout.js templates
 files:
-  - "test/**/*"
+  - 'test/**/*'
 exclude:
-  - "**/*.min.js"
-  - "**/*.mm.js"
+  - '**/*.min.js'
+  - '**/*.mm.js'
 reporter: json
 
 languages-exts:
-    coffeescript:
-        - coffeee
-    javascript:
-        - es
-        - es5
-        - es6
-        - es7
+  coffeescript:
+    - coffeee
+  javascript:
+    - es
+    - es5
+    - es6
+    - es7
 ```
+
 and run `jscpd` command, you will check code for duplicates according config from .cpd.yaml
 
 or
@@ -106,29 +108,28 @@ result = jscpd::run
 
 Please see the [minimatch documentation](https://github.com/isaacs/minimatch) for more details.
 
-
 ## Options:
 
-| Option             | Type      | Default       | Description
-|--------------------|-----------|---------------|-------------------------------------------------------------
-| -l, --min-lines    | [NUMBER]  | 5             | min size of duplication in code lines
-| -t, --min-tokens   | [NUMBER]  | 70            | min size of duplication in code tokens
-| -f, --files        | [STRING]  | *             | glob pattern for find code
-| -r, --reporter     | [STRING]  | xml           | reporter name or path
-| -x, --xsl-href     | [STRING]  | -             | path to xsl file for include to xml report
-| -e, --exclude      | [STRING]  | -             | directory to ignore
-|    --languages-exts| [STRING]  | -             | list of languages with file extensions (e.g. language:ext1,ext2;language:ext3)
-| -g, --languages    | [STRING]  | All supported | list of languages which scan for duplicates, separated with coma
-| -o, --output       | [PATH]    | -             | path to report file
-| -c, --config       | [PATH]    | -             | path to config yml file  (e.g. .cpd.yml)
-|     --verbose      |           | -             | show full info about copies
-|     --skip-comments| false     | -             | skip comments in code when duplications finding
-| -b, --blame        | false     | -             | blame authors of duplications (get information about authors from git)
-| -p, --path         | [PATH]    | Current dir   | path to code
-|     --limit        | [NUMBER]  | 50            | limit of allowed duplications, if real duplications percent more then limit jscpd exit with error
-| -d, --debug        |           | -             | show debug information (options list and selected files)
-| -v, --version      |           | -             | Display the current version
-| -h, --help         |           | -             | Display help and usage details
+| Option           | Type     | Default       | Description                                                                                       |
+| ---------------- | -------- | ------------- | ------------------------------------------------------------------------------------------------- |
+| -l, --min-lines  | [NUMBER] | 5             | min size of duplication in code lines                                                             |
+| -t, --min-tokens | [NUMBER] | 70            | min size of duplication in code tokens                                                            |
+| -f, --files      | [STRING] | \*            | glob pattern for find code                                                                        |
+| -r, --reporter   | [STRING] | xml           | reporter name or path                                                                             |
+| -x, --xsl-href   | [STRING] | -             | path to xsl file for include to xml report                                                        |
+| -e, --exclude    | [STRING] | -             | directory to ignore                                                                               |
+| --languages-exts | [STRING] | -             | list of languages with file extensions (e.g. language:ext1,ext2;language:ext3)                    |
+| -g, --languages  | [STRING] | All supported | list of languages which scan for duplicates, separated with coma                                  |
+| -o, --output     | [PATH]   | -             | path to report file                                                                               |
+| -c, --config     | [PATH]   | -             | path to config yml file (e.g. .cpd.yml)                                                           |
+| --verbose        |          | -             | show full info about copies                                                                       |
+| --skip-comments  | false    | -             | skip comments in code when duplications finding                                                   |
+| -b, --blame      | false    | -             | blame authors of duplications (get information about authors from git)                            |
+| -p, --path       | [PATH]   | Current dir   | path to code                                                                                      |
+| --limit          | [NUMBER] | 50            | limit of allowed duplications, if real duplications percent more then limit jscpd exit with error |
+| -d, --debug      |          | -             | show debug information (options list and selected files)                                          |
+| -v, --version    |          | -             | Display the current version                                                                       |
+| -h, --help       |          | -             | Display help and usage details                                                                    |
 
 Verbose output:
 
@@ -152,7 +153,6 @@ Custom reporter is a function which is executed into context of `Report` (`repor
 
 At least one of `raw` or `dump` needs to be provided, `log` is fully optional.
 
-
 ## XSLT reports support
 
 You can point xsl file for add it to xml report
@@ -170,13 +170,14 @@ In this case report.xml will include following lines:
     <!-- ... -->
 </pmd-cpd>
 ```
+
 If you open xml file in browser template from `reporters-xslt/simple.xsl` will apply to your xml and show pretty html report.
 You can find example of xsl template in reporters-xslt folder.
 
 ## Errors
 
- - **JSCPD Error 01**: {language} in not supported  -  error will show if you try to find duplication in not supported language
- - **JSCPD Error 02**: can't read config file {path} - you use wrong path to file or file is broken
+- **JSCPD Error 01**: {language} in not supported - error will show if you try to find duplication in not supported language
+- **JSCPD Error 02**: can't read config file {path} - you use wrong path to file or file is broken
 
 ## Run tests
 
@@ -189,7 +190,6 @@ You can find example of xsl template in reporters-xslt folder.
 ```
 
 ## Changelog
-
 
 [Project changelog](https://github.com/kucherenko/jscpd/blob/master/changelog.md)
 

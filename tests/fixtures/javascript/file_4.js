@@ -1,83 +1,81 @@
 var eldest, grade;
 
 grade = function(student) {
-    if (student.excellentWork) {
-        return "A+";
-    } else if (student.okayStuff) {
-        if (student.triedHard) {
-            return "B";
-        } else {
-            return "B-";
-        }
+  if (student.excellentWork) {
+    return 'A+';
+  } else if (student.okayStuff) {
+    if (student.triedHard) {
+      return 'B';
     } else {
-        return "C";
+      return 'B-';
     }
+  } else {
+    return 'C';
+  }
 };
 
-eldest = 24 > 21 ? "Liz" : "Ike";
-
+eldest = 24 > 21 ? 'Liz' : 'Ike';
 
 var volume, winner;
 
 if (ignition === true) {
-    launch();
+  launch();
 }
 
 if (band !== SpinalTap) {
-    volume = 10;
+  volume = 10;
 }
 
 if (answer !== false) {
-    letTheWildRumpusBegin();
+  letTheWildRumpusBegin();
 }
 
 if (car.speed < limit) {
-    accelerate();
+  accelerate();
 }
 
 if (pick === 47 || pick === 92 || pick === 13) {
-    winner = true;
+  winner = true;
 }
 
-print(inspect("My name is " + this.name));
+print(inspect('My name is ' + this.name));
 
 var footprints, solipsism, speed;
 
-if ((typeof mind !== "undefined" && mind !== null) && (typeof world === "undefined" || world === null)) {
-    solipsism = true;
+if (typeof mind !== 'undefined' && mind !== null && (typeof world === 'undefined' || world === null)) {
+  solipsism = true;
 }
 
 speed = 0;
 
 if (speed == null) {
-    speed = 15;
+  speed = 15;
 }
 
-footprints = typeof yeti !== "undefined" && yeti !== null ? yeti : "bear";
+footprints = typeof yeti !== 'undefined' && yeti !== null ? yeti : 'bear';
 
-eldest = 24 > 21 ? "Liz" : "Ike";
-
+eldest = 24 > 21 ? 'Liz' : 'Ike';
 
 var volume, winner;
 
 if (ignition === true) {
-    launch();
+  launch();
 }
 
 if (band !== SpinalTap) {
-    volume = 10;
+  volume = 10;
 }
 
 if (answer !== false) {
-    letTheWildRumpusBegin();
+  letTheWildRumpusBegin();
 }
 
 if (car.speed < limit) {
-    accelerate();
+  accelerate();
 }
 
 if (pick === 47 || pick === 92 || pick === 13) {
-    winner = true;
+  winner = true;
 }
 
-print(inspect("My name is " + this.name));
+print(inspect('My name is ' + this.name));

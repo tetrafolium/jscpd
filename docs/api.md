@@ -1,16 +1,13 @@
 ![jscpd logo](../assets/logo-small-box.svg)
+
 # Programming API
 
-## JSCPD  
+## JSCPD
 
 Detect duplications in code string:
 
 ```typescript
-import {
-  JSCPD, 
-  IClone,
-  IOptions, 
-} from 'jscpd';
+import { JSCPD, IClone, IOptions } from 'jscpd';
 
 const options: IOptions = {};
 
@@ -18,25 +15,20 @@ const cpd = new JSCPD(options);
 
 const code = '...string with my code...';
 
-cpd.detect(code, { id: 'test', format: 'markup' })
-  .then((clones: IClone[]) => console.log(clones));
-``` 
+cpd.detect(code, { id: 'test', format: 'markup' }).then((clones: IClone[]) => console.log(clones));
+```
+
 Detect duplications in files:
 
 ```typescript
-import {
-  JSCPD, 
-  IClone,
-  IOptions, 
-} from 'jscpd';
+import { JSCPD, IClone, IOptions } from 'jscpd';
 
 const options: IOptions = {};
 
 const cpd = new JSCPD(options);
 
-cpd.detectInFiles(['./src', './tests'])
-  .then((clones: IClone[]) => console.log(clones));
-``` 
+cpd.detectInFiles(['./src', './tests']).then((clones: IClone[]) => console.log(clones));
+```
 
 ## Options
 
@@ -78,7 +70,7 @@ During the detections process `JSCPD` emit following events:
 New source detection started event
 
 ```typescript
-cpd.on(MATCH_SOURCE_EVENT, (source) => {
+cpd.on(MATCH_SOURCE_EVENT, source => {
   console.log(source);
 });
 ```
@@ -86,6 +78,7 @@ cpd.on(MATCH_SOURCE_EVENT, (source) => {
 ### CLONE_FOUND_EVENT
 
 Clone found event
+
 ```typescript
 cpd.on(CLONE_FOUND_EVENT, (clone: IClone) => {
   console.log(clone);
@@ -95,8 +88,9 @@ cpd.on(CLONE_FOUND_EVENT, (clone: IClone) => {
 ### SOURCE_SKIPPED_EVENT
 
 Skipped source event (see max-size, min-lines and max-lines options)
+
 ```typescript
-cpd.on(SOURCE_SKIPPED_EVENT, (stat) => {
+cpd.on(SOURCE_SKIPPED_EVENT, stat => {
   console.log(stat);
 });
 ```
@@ -104,13 +98,14 @@ cpd.on(SOURCE_SKIPPED_EVENT, (stat) => {
 ### END_EVENT
 
 Detection process finished event
+
 ```typescript
 cpd.on(END_EVENT, (clones: IClone[]) => {
   console.log(clones);
 });
 ```
 
-## Reporters 
+## Reporters
 
 TODO
 

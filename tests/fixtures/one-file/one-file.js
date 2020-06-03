@@ -28,7 +28,6 @@ function toggleTab(selectedNav, targetId) {
   });
 }
 
-
 document.querySelectorAll('#nav li').forEach(function(navEl) {
   navEl.onclick = function() {
     toggleTab(this.id, this.dataset.target);
